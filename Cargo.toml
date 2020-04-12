@@ -1,0 +1,26 @@
+[package]
+authors = ["Gordon <g@yaldi.co>"]
+edition = "2018"
+readme = "README.md"
+name = "nucleo-h745zi-q-overdrive"
+version = "0.1.0"
+
+[dependencies]
+cortex-m = "0.6.2"
+cortex-m-rt = "0.6.12"
+panic-halt = "0.2.0"
+
+[dependencies.stm32h7]
+# Need to use nightly as ODEN bit not yet in release
+git = "https://github.com/stm32-rs/stm32-rs-nightlies"
+features = ["stm32h747cm7", "rt"]
+
+[[bin]]
+name = "nucleo-h745zi-q-overdrive"
+test = false
+bench = false
+
+[profile.release]
+codegen-units = 1
+debug = true
+lto = true
