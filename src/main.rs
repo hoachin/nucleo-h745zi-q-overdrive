@@ -68,10 +68,21 @@ fn main() -> ! {
 
     // Set sys_clk div1 (i.e. same as VCO - 480MHz)
     // Set D1 Prescaler to div 2 = 480MHz / 2 = 240MHz
+    // Set APB3 peripheral clocks to max (120MHz)
     rcc.d1cfgr.modify(|_, w| {
         w.d1cpre().div1()
             .hpre().div2()
+            .d1ppre().div2()
     });
+
+    // Set APB1 & APB2 peripheral clocks to max (120MHz)
+    rcc.d2cfgr.modify(|_, w| {
+        w.d2ppre1().div2()
+            .d2ppre2().div2()
+    });
+
+    // Set APB4 peripheral clock to max (120MHz)
+    rcc.d3cfgr.modify(|_, w| w.d3ppre().div2());
 
     // Set sys_clk = PLL1
     rcc.cfgr.modify(|_, w| w.sw().pll1());
